@@ -1,0 +1,8 @@
+rootProject.name = "databases"
+
+include "common"
+
+include "postgres"
+include "mongo"
+include "elasticsearch"
+include "redis"

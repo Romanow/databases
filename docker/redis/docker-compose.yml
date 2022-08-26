@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+  redis-master:
+    image: "bitnami/redis:7.0"
+    container_name: redis-master
+    environment:
+      - REDIS_REPLICATION_MODE=master
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "6379:6379"
+    networks:
+      - redis
+
+  redis-slave:
+    image: "bitnami/redis:7.0"
+    container_name: redis-slave
+    environment:
+      - REDIS_REPLICATION_MODE=slave
+      - REDIS_MASTER_HOST=redis-master
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "6380:6379"
+    networks:
+      - redis
+    depends_on:
+      - redis-master
+
+  redis-sentinel:
+    image: "bitnami/redis-sentinel:7.0"
+    restart: on-failure
+    environment:
+      - REDIS_MASTER_HOST=redis-master
+    ports:
+      - "26379:26379"
+    networks:
+      - redis
+    depends_on:
+      - redis-master
+      - redis-slave
+
+networks:
+  redis:
