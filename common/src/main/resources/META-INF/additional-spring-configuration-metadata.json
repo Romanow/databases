@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "books.location",
+      "type": "java.lang.String",
+      "description": "Books folder."
+    }
+  ]
+}

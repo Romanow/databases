@@ -1,0 +1,90 @@
+services:
+  redis-master:
+    image: "bitnami/redis:7.0.5"
+    container_name: redis-master
+    environment:
+      - REDIS_REPLICATION_MODE=master
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "6379:6379"
+    networks:
+      - redis
+
+  redis-slave-1:
+    image: "bitnami/redis:7.0"
+    container_name: redis-slave-1
+    environment:
+      - REDIS_REPLICATION_MODE=slave
+      - REDIS_MASTER_HOST=redis-master
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "6380:6379"
+    networks:
+      - redis
+    depends_on:
+      - redis-master
+
+  redis-slave-2:
+    image: "bitnami/redis:7.0"
+    container_name: redis-slave-2
+    environment:
+      - REDIS_REPLICATION_MODE=slave
+      - REDIS_MASTER_HOST=redis-master
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "6381:6379"
+    networks:
+      - redis
+    depends_on:
+      - redis-master
+
+  redis-sentinel-1:
+    image: "bitnami/redis-sentinel:7.0.5"
+    container_name: redis-sentinel-1
+    environment:
+      - REDIS_MASTER_HOST=redis-master
+      - REDIS_SENTINEL_RESOLVE_HOSTNAMES=yes
+      - REDIS_SENTINEL_ANNOUNCE_HOSTNAMES=yes
+    ports:
+      - "26379:26379"
+    networks:
+      - redis
+    depends_on:
+      - redis-master
+      - redis-slave-1
+      - redis-slave-2
+
+  redis-sentinel-2:
+    image: "bitnami/redis-sentinel:7.0"
+    container_name: redis-sentinel-2
+    environment:
+      - REDIS_MASTER_HOST=redis-master
+      - REDIS_SENTINEL_RESOLVE_HOSTNAMES=yes
+      - REDIS_SENTINEL_ANNOUNCE_HOSTNAMES=yes
+    ports:
+      - "26380:26379"
+    networks:
+      - redis
+    depends_on:
+      - redis-master
+      - redis-slave-1
+      - redis-slave-2
+
+  redis-sentinel-3:
+    image: "bitnami/redis-sentinel:7.0"
+    container_name: redis-sentinel-3
+    environment:
+      - REDIS_MASTER_HOST=redis-master
+      - REDIS_SENTINEL_RESOLVE_HOSTNAMES=yes
+      - REDIS_SENTINEL_ANNOUNCE_HOSTNAMES=yes
+    ports:
+      - "26381:26379"
+    networks:
+      - redis
+    depends_on:
+      - redis-master
+      - redis-slave-1
+      - redis-slave-2
+
+networks:
+  redis:
