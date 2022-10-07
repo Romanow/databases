@@ -51,9 +51,12 @@ slave slave 192.168.224.3:6379 192.168.224.3 6379 @ mymaster redis-master 6379
 
 И на host машине прописать в `/etc/hosts`
 
-```
-$ echo "127.0.0.1    redis-master" | sudo tee -a /etc/hosts
+```shell
+$ sudo tee -a /etc/hosts > /dev/null <<EOT
 127.0.0.1    redis-master
+127.0.0.1    redis-slave-1
+127.0.0.1    redis-slave-2
+EOT
 ```
 
 Без этого Sentinel отдает внутренний ip адрес master ноды и при старте приложения возникает ошибка:

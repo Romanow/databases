@@ -16,9 +16,12 @@ services:
     environment:
       - REDIS_REPLICATION_MODE=slave
       - REDIS_MASTER_HOST=redis-master
+      - REDIS_REPLICA_IP=redis-slave-1
+      - REDIS_PORT_NUMBER=6380
+      - REDIS_REPLICA_PORT=6380
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
-      - "6380:6379"
+      - "6380:6380"
     networks:
       - redis
     depends_on:
@@ -30,9 +33,12 @@ services:
     environment:
       - REDIS_REPLICATION_MODE=slave
       - REDIS_MASTER_HOST=redis-master
+      - REDIS_REPLICA_IP=redis-slave-2
+      - REDIS_PORT_NUMBER=6381
+      - REDIS_REPLICA_PORT=6381
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
-      - "6381:6379"
+      - "6381:6381"
     networks:
       - redis
     depends_on:
