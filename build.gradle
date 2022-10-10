@@ -4,12 +4,13 @@ plugins {
     id "org.jetbrains.kotlin.jvm" version "1.7.10"
     id "org.jetbrains.kotlin.plugin.spring" version "1.7.10" apply false
     id "org.jetbrains.kotlin.plugin.jpa" version "1.7.10" apply false
-    id "org.springframework.boot" version "2.7.0" apply false
+    id "org.springframework.boot" version "2.7.4" apply false
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
 }
 
 ext {
     springBootVersion = "2.7.0"
+    springBootShellVersion = "2.1.2"
     kotlinVersion = "1.7.10"
     postgresContainerVersion = "1.16.0"
 }
@@ -38,6 +39,7 @@ allprojects { ->
     dependencyManagement {
         imports {
             mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+            mavenBom "org.springframework.shell:spring-shell-dependencies:$springBootShellVersion"
         }
     }
 

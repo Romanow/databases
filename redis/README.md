@@ -5,7 +5,7 @@ GUI: [Medis](https://github.com/luin/medis)
 |   Role   |        Address      |
 |----------|---------------------|
 | Master   | 6379                |
-| Slave    | 6380                |
+| Slave    | 6380, 6381          |
 | Sentinel | 26379, 26380, 26381 |
 
 ### Типы данных
@@ -17,11 +17,13 @@ GUI: [Medis](https://github.com/luin/medis)
 
 ### Запуск кластера
 
-Docker: [redis.yml](docker/docker-compose.yml)
+Docker: [docker-compose.yml](docker/docker-compose.yml)
 
 ```shell
 $ docker-compose up -d
 ```
+
+### Особенности запуска
 
 Для того чтобы Redis поднять в Sentinel внутри Docker нужно чтобы в `sentinel.conf` было прописано:
 
@@ -71,3 +73,14 @@ org.springframework.data.redis.RedisConnectionFailureException: Unable to connec
 ```
 Error response from daemon: Ports are not available: exposing port TCP 0.0.0.0:26379 -> 0.0.0.0:0: listen tcp 0.0.0.0:26379: bind: address already in use
 ```
+
+## Ссылки
+
+1. [High availability with Redis Sentinel](https://redis.io/docs/manual/sentinel/)
+2. [Sentinel client spec](https://redis.io/docs/reference/sentinel-clients/)
+3. [Разбираемся с Redis](https://habr.com/ru/company/wunderfund/blog/685894/)
+
+#### Образы Docker
+
+1. [Bitnami Redis](https://hub.docker.com/r/bitnami/redis)
+1. [Bitnami Redis Sentinel](https://hub.docker.com/r/bitnami/redis-sentinel)

@@ -1,12 +1,15 @@
+version: "3.8"
 services:
   redis-master:
-    image: "bitnami/redis:7.0.5"
+    image: "bitnami/redis:7.0"
     container_name: redis-master
     environment:
       - REDIS_REPLICATION_MODE=master
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
       - "6379:6379"
+    volumes:
+      - redis-master-data:/bitnami/redis/data
     networks:
       - redis
 
@@ -45,7 +48,7 @@ services:
       - redis-master
 
   redis-sentinel-1:
-    image: "bitnami/redis-sentinel:7.0.5"
+    image: "bitnami/redis-sentinel:7.0"
     container_name: redis-sentinel-1
     environment:
       - REDIS_MASTER_HOST=redis-master
@@ -94,3 +97,6 @@ services:
 
 networks:
   redis:
+
+volumes:
+  redis-master-data:

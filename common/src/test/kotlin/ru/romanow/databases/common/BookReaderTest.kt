@@ -16,7 +16,7 @@ internal class BookReaderTest {
 
     @Test
     fun readSentences() {
-        val sentences = bookReader.readSentences()
+        val sentences = bookReader.readSentencesFromBook(book)
         assertThat(sentences).hasSize(6)
     }
 

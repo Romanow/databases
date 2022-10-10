@@ -1,0 +1,67 @@
+version: "3.8"
+services:
+  mongo-primary:
+    image: "bitnami/mongodb:6.0"
+    container_name: mongo-primary
+    environment:
+      - MONGODB_USERNAME=program
+      - MONGODB_PASSWORD=test
+      - MONGODB_DATABASE=testdb
+      - MONGODB_ROOT_USER=main
+      - MONGODB_ROOT_PASSWORD=root
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_REPLICA_SET_NAME=rs0
+      - MONGODB_REPLICA_SET_KEY=replicaset
+      - MONGODB_ADVERTISED_HOSTNAME=mongo-primary
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-master-data:/bitnami/mongodb
+    networks:
+      - mongo
+
+  mongo-secondary-1:
+    image: "bitnami/mongodb:6.0"
+    container_name: mongo-secondary-1
+    environment:
+      - MONGODB_PORT_NUMBER=27018
+      - MONGODB_REPLICA_SET_MODE=secondary
+      - MONGODB_ADVERTISED_HOSTNAME=mongo-secondary-1
+      - MONGODB_INITIAL_PRIMARY_HOST=mongo-primary
+      - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
+      - MONGODB_INITIAL_PRIMARY_ROOT_USER=main
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=root
+      - MONGODB_REPLICA_SET_NAME=rs0
+      - MONGODB_REPLICA_SET_KEY=replicaset
+    ports:
+      - "27018:27018"
+    networks:
+      - mongo
+    depends_on:
+      - mongo-primary
+
+  mongo-secondary-2:
+    image: "bitnami/mongodb:6.0"
+    container_name: mongo-secondary-2
+    environment:
+      - MONGODB_PORT_NUMBER=27019
+      - MONGODB_REPLICA_SET_MODE=secondary
+      - MONGODB_ADVERTISED_HOSTNAME=mongo-secondary-2
+      - MONGODB_INITIAL_PRIMARY_HOST=mongo-primary
+      - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
+      - MONGODB_INITIAL_PRIMARY_ROOT_USER=main
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=root
+      - MONGODB_REPLICA_SET_NAME=rs0
+      - MONGODB_REPLICA_SET_KEY=replicaset
+    ports:
+      - "27019:27019"
+    networks:
+      - mongo
+    depends_on:
+      - mongo-primary
+
+networks:
+  mongo:
+
+volumes:
+  mongo-master-data:

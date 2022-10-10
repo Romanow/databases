@@ -4,7 +4,3 @@ spring:
   profiles:
     active: docker
     include: common
-
-  shell:
-    history:
-      enabled: false

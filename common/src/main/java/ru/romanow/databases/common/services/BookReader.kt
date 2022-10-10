@@ -1,10 +1,11 @@
 package ru.romanow.databases.common.services
 
+import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.support.ResourcePatternResolver
 import org.springframework.stereotype.Component
 import ru.romanow.databases.common.models.Sentence
 import ru.romanow.databases.common.properties.BooksProperties
-import java.nio.file.Files
+import java.io.InputStreamReader
 import java.util.regex.Pattern
 import kotlin.streams.toList
 
@@ -16,17 +17,23 @@ class BookReader(
     private val wordsPattern = Pattern.compile("((\\b[^\\s]+\\b)((?<=\\.\\w).)?)")
     private val sentencePattern = Pattern.compile("\\b[^.!?]+[.!?]+")
 
-    fun readSentences(): List<Sentence> {
-        val files = resourceResolver.getResources("classpath:${booksProperties.location}/*.txt")
-        return files.flatMap {
-            val text = Files.readString(it.file.toPath())
-            sentencePattern
-                .matcher(text)
-                .results()
-                .map { r -> r.group() }
-                .map { s -> Sentence(s, readWords(s)) }
-                .toList()
-        }
+    fun listBooks(): List<String> {
+        return resourceResolver.getResources("classpath:${booksProperties.location}/*.txt")
+            .map { it.filename!! }
+    }
+
+    fun readSentencesFromBook(book: String): List<Sentence> {
+        return ClassPathResource("${booksProperties.location}/$book")
+            .inputStream
+            .use {
+                val text = InputStreamReader(it).readText()
+                sentencePattern
+                    .matcher(text)
+                    .results()
+                    .map { r -> r.group() }
+                    .map { s -> Sentence(s, readWords(s)) }
+                    .toList()
+            }
     }
 
     fun readWords(sentence: String) =
