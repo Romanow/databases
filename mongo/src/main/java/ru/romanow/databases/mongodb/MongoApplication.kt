@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class MongoDbApplication
+class MongoApplication
 
 fun main() {
-    runApplication<MongoDbApplication>()
+    runApplication<MongoApplication>()
 }

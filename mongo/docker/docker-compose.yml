@@ -59,6 +59,7 @@ services:
       - mongo
     depends_on:
       - mongo-primary
+      - mongo-secondary-1
 
 networks:
   mongo:
