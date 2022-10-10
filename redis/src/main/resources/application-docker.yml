@@ -1,6 +1,8 @@
 spring:
   redis:
     client-type: lettuce
+    password: test
     sentinel:
       master: mymaster
+      password: test
       nodes: localhost:26379,localhost:26380,localhost:26381

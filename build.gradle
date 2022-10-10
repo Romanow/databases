@@ -9,7 +9,7 @@ plugins {
 }
 
 ext {
-    springBootVersion = "2.7.0"
+    springBootVersion = "2.7.4"
     springBootShellVersion = "2.1.2"
     kotlinVersion = "1.7.10"
     postgresContainerVersion = "1.16.0"
@@ -46,8 +46,6 @@ allprojects { ->
     dependencies {
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
         implementation "org.jetbrains.kotlin:kotlin-reflect"
-
-        annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
         testImplementation "org.springframework.boot:spring-boot-starter-test"
         testImplementation "org.assertj:assertj-core"

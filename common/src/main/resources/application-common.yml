@@ -1,2 +1,7 @@
 books:
   location: books
+
+spring:
+  shell:
+    history:
+      enabled: false
