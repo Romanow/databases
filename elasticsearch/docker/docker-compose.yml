@@ -1,2 +1,98 @@
-version: "3.8
+version: "3.8"
 services:
+  elasticsearch-1:
+    image: "bitnami/elasticsearch:8.4.3"
+    container_name: elasticsearch-1
+    environment:
+      - ELASTICSEARCH_NODE_NAME=elasticsearch-1
+      - ELASTICSEARCH_CLUSTER_NAME=elastic
+      - ELASTICSEARCH_PASSWORD=qwerty
+      - ELASTICSEARCH_ENABLE_SECURITY=true
+      - ELASTICSEARCH_ENABLE_REST_TLS=false
+      - ELASTICSEARCH_TLS_VERIFICATION_MODE=none
+      - ELASTICSEARCH_TRANSPORT_TLS_KEYSTORE_LOCATION=/opt/bitnami/elasticsearch/config/certs/ca-elastic.p12
+      - ELASTICSEARCH_TRANSPORT_TLS_TRUSTSTORE_LOCATION=/opt/bitnami/elasticsearch/config/certs/ca-elastic.p12
+      - ELASTICSEARCH_CLUSTER_HOSTS=elasticsearch-1,elasticsearch-2,elasticsearch-3
+      - ELASTICSEARCH_HEAP_SIZE=1g
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - elastic-data-1:/bitnami
+      - ./certs/:/opt/bitnami/elasticsearch/config/certs/
+    networks:
+      - elastic
+
+  elasticsearch-2:
+    image: "bitnami/elasticsearch:8.4.3"
+    container_name: elasticsearch-2
+    environment:
+      - ELASTICSEARCH_NODE_NAME=elasticsearch-2
+      - ELASTICSEARCH_CLUSTER_NAME=elastic
+      - ELASTICSEARCH_PASSWORD=qwerty
+      - ELASTICSEARCH_ENABLE_SECURITY=true
+      - ELASTICSEARCH_ENABLE_REST_TLS=false
+      - ELASTICSEARCH_TLS_VERIFICATION_MODE=none
+      - ELASTICSEARCH_TRANSPORT_TLS_KEYSTORE_LOCATION=/opt/bitnami/elasticsearch/config/certs/ca-elastic.p12
+      - ELASTICSEARCH_TRANSPORT_TLS_TRUSTSTORE_LOCATION=/opt/bitnami/elasticsearch/config/certs/ca-elastic.p12
+      - ELASTICSEARCH_CLUSTER_HOSTS=elasticsearch-1,elasticsearch-2,elasticsearch-3
+      - ELASTICSEARCH_HEAP_SIZE=1g
+    ports:
+      - "9201:9200"
+      - "9301:9300"
+    volumes:
+      - elastic-data-2:/bitnami
+      - ./certs/:/opt/bitnami/elasticsearch/config/certs/
+    networks:
+      - elastic
+
+  elasticsearch-3:
+    image: "bitnami/elasticsearch:8.4.3"
+    container_name: elasticsearch-3
+    environment:
+      - ELASTICSEARCH_NODE_NAME=elasticsearch-3
+      - ELASTICSEARCH_CLUSTER_NAME=elastic
+      - ELASTICSEARCH_PASSWORD=qwerty
+      - ELASTICSEARCH_ENABLE_SECURITY=true
+      - ELASTICSEARCH_ENABLE_REST_TLS=false
+      - ELASTICSEARCH_TLS_VERIFICATION_MODE=none
+      - ELASTICSEARCH_TRANSPORT_TLS_KEYSTORE_LOCATION=/opt/bitnami/elasticsearch/config/certs/ca-elastic.p12
+      - ELASTICSEARCH_TRANSPORT_TLS_TRUSTSTORE_LOCATION=/opt/bitnami/elasticsearch/config/certs/ca-elastic.p12
+      - ELASTICSEARCH_CLUSTER_HOSTS=elasticsearch-1,elasticsearch-2,elasticsearch-3
+      - ELASTICSEARCH_HEAP_SIZE=1g
+    ports:
+      - "9202:9200"
+      - "9302:9300"
+    volumes:
+      - elastic-data-3:/bitnami
+      - ./certs/:/opt/bitnami/elasticsearch/config/certs/
+    networks:
+      - elastic
+
+  kibana:
+    image: "bitnami/kibana:8.4.3"
+    container_name: kibana
+    environment:
+      - KIBANA_CREATE_USER=yes
+      - KIBANA_PASSWORD=qwerty
+      - KIBANA_ELASTICSEARCH_PASSWORD=qwerty
+      - KIBANA_ELASTICSEARCH_URL=elasticsearch-1
+    ports:
+      - "5601:5601"
+    volumes:
+      - kibana-data:/bitnami/kibana
+    networks:
+      - elastic
+    depends_on:
+      - elasticsearch-1
+      - elasticsearch-2
+      - elasticsearch-3
+
+networks:
+  elastic:
+
+volumes:
+  elastic-data-1:
+  elastic-data-2:
+  elastic-data-3:
+  kibana-data:
