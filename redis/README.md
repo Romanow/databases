@@ -74,6 +74,21 @@ org.springframework.data.redis.RedisConnectionFailureException: Unable to connec
 Error response from daemon: Ports are not available: exposing port TCP 0.0.0.0:26379 -> 0.0.0.0:0: listen tcp 0.0.0.0:26379: bind: address already in use
 ```
 
+### Пример
+
+```
+eval "
+  local order = redis.call('hkeys', KEYS[1]);
+  return redis.call('sadd', KEYS[2], unpack(order));
+" 2 hset:books list:words
+
+sort list:words limit 0 50 alpha desc
+
+sort list:words by hset:books->* limit 0 50
+
+hget hset:books address
+```
+
 ## Ссылки
 
 1. [High availability with Redis Sentinel](https://redis.io/docs/manual/sentinel/)

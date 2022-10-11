@@ -2,10 +2,10 @@
 
 GUI: [MongoDB Compass](https://www.mongodb.com/docs/compass/current/)
 
-|   Role   |   Address   |
-|----------|-------------|
-| Master   | 27017       |
-| Slave    | 27117, 2721 |
+|   Role   |   Address    |
+|----------|--------------|
+| Master   | 27017        |
+| Slave    | 27018, 27019 |
 
 ### Запуск кластера
 
@@ -23,6 +23,13 @@ $ sudo tee -a /etc/hosts > /dev/null <<EOT
 127.0.0.1    mongo-secondary-1
 127.0.0.1    mongo-secondary-2
 EOT
+```
+
+### Примеры
+
+```javascript
+// найти самые часто встречающиеся слова
+db.words.find().sort({counter:-1}).limit(10)
 ```
 
 ## Ссылки

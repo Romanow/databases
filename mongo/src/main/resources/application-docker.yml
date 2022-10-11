@@ -1,4 +1,4 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://program:test@localhost:27017,localhost:27018,localhost:27019/testdb
+      uri: mongodb://program:test@localhost:27017,localhost:27018,localhost:27019/testdb?replicaSet=rs0
