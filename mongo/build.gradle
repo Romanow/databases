@@ -13,3 +13,7 @@ dependencies {
 bootJar {
     archiveFileName = "${project.name}.jar"
 }
+
+springBoot {
+    buildInfo()
+}

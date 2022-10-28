@@ -1,9 +1,10 @@
 version: "3.8"
 services:
   elasticsearch-1:
-    image: "bitnami/elasticsearch:8.4.3"
+    image: "bitnami/elasticsearch:7.17.6"
     container_name: elasticsearch-1
     environment:
+      - BITNAMI_DEBUG=true
       - ELASTICSEARCH_NODE_NAME=elasticsearch-1
       - ELASTICSEARCH_CLUSTER_NAME=elastic
       - ELASTICSEARCH_PASSWORD=qwerty
@@ -24,7 +25,7 @@ services:
       - elastic
 
   elasticsearch-2:
-    image: "bitnami/elasticsearch:8.4.3"
+    image: "bitnami/elasticsearch:7.17.6"
     container_name: elasticsearch-2
     environment:
       - ELASTICSEARCH_NODE_NAME=elasticsearch-2
@@ -47,7 +48,7 @@ services:
       - elastic
 
   elasticsearch-3:
-    image: "bitnami/elasticsearch:8.4.3"
+    image: "bitnami/elasticsearch:7.17.6"
     container_name: elasticsearch-3
     environment:
       - ELASTICSEARCH_NODE_NAME=elasticsearch-3
@@ -70,7 +71,7 @@ services:
       - elastic
 
   kibana:
-    image: "bitnami/kibana:8.4.3"
+    image: "bitnami/kibana:7.17.6"
     container_name: kibana
     environment:
       - KIBANA_CREATE_USER=yes

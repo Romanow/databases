@@ -1,4 +1,4 @@
-package ru.romanow.databases.elastic.search
+package ru.romanow.databases.elastic
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

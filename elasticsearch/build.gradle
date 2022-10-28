@@ -5,8 +5,15 @@ plugins {
 
 dependencies {
     implementation project(":common")
+
+    implementation "org.springframework.boot:spring-boot-starter-data-elasticsearch"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
 bootJar {
     archiveFileName = "${project.name}.jar"
+}
+
+springBoot {
+    buildInfo()
 }

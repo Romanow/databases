@@ -4,10 +4,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.shell.CompletionContext
 import org.springframework.shell.CompletionProposal
-import org.springframework.shell.standard.ShellComponent
-import org.springframework.shell.standard.ShellMethod
-import org.springframework.shell.standard.ShellOption
-import org.springframework.shell.standard.ValueProvider
+import org.springframework.shell.standard.*
 import org.springframework.stereotype.Component
 import ru.romanow.databases.common.events.ProgressBarProgressEvent
 import ru.romanow.databases.common.events.ProgressBarResetEvent
@@ -15,12 +12,13 @@ import ru.romanow.databases.common.services.BookReader
 import ru.romanow.databases.common.services.OperationProvider
 
 @ShellComponent
+@ShellCommandGroup("Read Commands")
 class ReadCommand(
     private val bookReader: BookReader,
     private val operationProvider: OperationProvider,
     private val publisher: ApplicationEventPublisher,
 ) {
-    private var logger = LoggerFactory.getLogger(ReadCommand::class.java)
+    protected var logger = LoggerFactory.getLogger(ReadCommand::class.java)
 
     @ShellMethod("list books")
     fun list() = bookReader.listBooks()
@@ -34,7 +32,7 @@ class ReadCommand(
         sentences
             .flatMap { it.words }
             .forEach {
-                operationProvider.insertWord(it)
+                operationProvider.insert(it)
                 if (index++ % (size / 100) == 0) {
                     val percent = (100 * (index.toDouble() / size)).toInt()
 
