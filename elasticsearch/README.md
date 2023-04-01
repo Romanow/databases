@@ -56,6 +56,8 @@ Docker: [docker-compose.yml](docker/docker-compose.yml)
 
 ```shell
 $ docker-compose up -d
+
+$ curl 'http://localhost:9200/_cluster/health?pretty' --user elastic:qwerty
 ```
 
 ### Примеры

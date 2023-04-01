@@ -13,7 +13,7 @@ class MongoOperatorProvider(
     private val mongoTemplate: MongoTemplate,
 ) : OperationProvider {
 
-    override fun insertWord(word: String) {
+    override fun insert(word: String) {
         val query = Query.query(Criteria.where("word").`is`(word))
         val update = Update().inc("counter", 1)
         mongoTemplate.upsert(query, update, Words::class.java)

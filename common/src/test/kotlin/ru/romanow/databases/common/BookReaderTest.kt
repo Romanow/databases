@@ -2,22 +2,24 @@ package ru.romanow.databases.common
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ActiveProfiles
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver
+import ru.romanow.databases.common.properties.BooksProperties
 import ru.romanow.databases.common.services.BookReader
 
-@ActiveProfiles("test")
-@SpringBootTest(classes = [CommonAutoConfiguration::class])
 internal class BookReaderTest {
 
-    @Autowired
-    private lateinit var bookReader: BookReader
+    private var bookReader: BookReader
+
+    init {
+        val resourcePatternResolver = PathMatchingResourcePatternResolver()
+        val booksProperties = BooksProperties("books")
+        bookReader = BookReader(resourcePatternResolver, booksProperties)
+    }
 
     @Test
     fun readSentences() {
-        val sentences = bookReader.readSentencesFromBook(book)
-        assertThat(sentences).hasSize(6)
+        val sentences = bookReader.readSentencesFromBook("test-2.txt")
+        assertThat(sentences).hasSize(4)
     }
 
     @Test

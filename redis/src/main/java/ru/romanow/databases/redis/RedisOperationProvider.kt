@@ -6,12 +6,12 @@ import ru.romanow.databases.common.services.OperationProvider
 import javax.annotation.Resource
 
 @Service
-class RedisOperationProvider : OperationProvider {
-
+class RedisOperationProvider(
     @Resource(name = "stringRedisTemplate")
-    private lateinit var hashOps: HashOperations<String, String, Int>
+    private var hashOps: HashOperations<String, String, Int>
+) : OperationProvider {
 
-    override fun insertWord(word: String) {
+    override fun insert(word: String) {
         hashOps.increment("books", word, 1L)
     }
 }
