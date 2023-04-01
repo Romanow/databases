@@ -1,9 +1,9 @@
 package ru.romanow.databases.redis
 
+import jakarta.annotation.Resource
 import org.springframework.data.redis.core.HashOperations
 import org.springframework.stereotype.Service
 import ru.romanow.databases.common.services.OperationProvider
-import javax.annotation.Resource
 
 @Service
 class RedisOperationProvider(

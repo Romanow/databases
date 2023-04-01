@@ -4,15 +4,15 @@ plugins {
     id "org.jetbrains.kotlin.jvm" version "1.7.10"
     id "org.jetbrains.kotlin.plugin.spring" version "1.7.10" apply false
     id "org.jetbrains.kotlin.plugin.jpa" version "1.7.10" apply false
-    id "org.springframework.boot" version "2.7.4" apply false
-    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+    id "org.springframework.boot" version "3.0.4" apply false
+    id "io.spring.dependency-management" version "1.1.0"
 }
 
 ext {
-    springBootVersion = "2.7.4"
-    springBootShellVersion = "2.1.2"
+    springBootVersion = "3.0.4"
+    springBootShellVersion = "3.0.1"
     kotlinVersion = "1.7.10"
-    postgresContainerVersion = "1.16.0"
+    testContainerVersion = "1.17.6"
 }
 
 allprojects { ->
@@ -20,10 +20,7 @@ allprojects { ->
     apply plugin: "kotlin"
     apply plugin: "io.spring.dependency-management"
 
-    sourceCompatibility = 1.11
-    targetCompatibility = 1.11
-
-    [compileKotlin, compileTestKotlin]*.kotlinOptions*.jvmTarget = "11"
+    [compileKotlin, compileTestKotlin]*.kotlinOptions*.jvmTarget = "17"
 
     repositories {
         mavenCentral()
@@ -53,5 +50,8 @@ allprojects { ->
 
     test {
         useJUnitPlatform()
+        testLogging {
+            showStandardStreams = true
+        }
     }
 }

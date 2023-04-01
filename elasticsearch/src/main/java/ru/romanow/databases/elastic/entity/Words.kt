@@ -5,7 +5,7 @@ import org.springframework.data.elasticsearch.annotations.Document
 import org.springframework.data.elasticsearch.annotations.Field
 import org.springframework.data.elasticsearch.annotations.FieldType
 
-@Document(indexName = "words", shards = 10)
+@Document(indexName = "words")
 data class Words(
     @Id
     var word: String,
