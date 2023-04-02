@@ -24,19 +24,18 @@ class PostgresApplicationTest {
         private const val POSTGRES_IMAGE = "postgres:15"
         private const val DATABASE = "testdb"
         private const val USERNAME = "program"
-
         private const val PASSWORD = "test"
 
         @JvmStatic
         @Container
-        var postgres: PostgreSQLContainer<*> = PostgresContainer(POSTGRES_IMAGE)
+        var postgres: PostgresContainer = PostgresContainer(POSTGRES_IMAGE)
             .withDatabaseName(DATABASE)
             .withUsername(USERNAME)
             .withPassword(PASSWORD)
 
         @JvmStatic
         @DynamicPropertySource
-        fun registerPgProperties(registry: DynamicPropertyRegistry) {
+        fun registerProperties(registry: DynamicPropertyRegistry) {
             registry.add("spring.datasource.url") { "jdbc:postgresql://localhost:${postgres.getMappedPort(5432)}/$DATABASE" }
             registry.add("spring.datasource.username") { USERNAME }
             registry.add("spring.datasource.password") { PASSWORD }

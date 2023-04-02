@@ -10,7 +10,6 @@ dependencies {
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     testImplementation "org.testcontainers:junit-jupiter:$testContainerVersion"
-    testImplementation "org.testcontainers:mongodb:$testContainerVersion"
 }
 
 bootJar {

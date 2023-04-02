@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 import ru.romanow.databases.common.properties.BooksProperties
 import ru.romanow.databases.common.services.BookReader
+import ru.romanow.databases.common.services.BookReaderImpl
 
 internal class BookReaderTest {
 
@@ -13,7 +14,7 @@ internal class BookReaderTest {
     init {
         val resourcePatternResolver = PathMatchingResourcePatternResolver()
         val booksProperties = BooksProperties("books")
-        bookReader = BookReader(resourcePatternResolver, booksProperties)
+        bookReader = BookReaderImpl(resourcePatternResolver, booksProperties)
     }
 
     @Test

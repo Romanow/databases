@@ -6,7 +6,6 @@ import org.springframework.shell.standard.ShellCommandGroup
 import org.springframework.shell.standard.ShellComponent
 import org.springframework.shell.standard.ShellMethod
 import org.springframework.shell.standard.ShellOption
-import org.springframework.stereotype.Service
 import ru.romanow.databases.common.commands.BooksValueProvider
 import ru.romanow.databases.common.events.ProgressBarProgressEvent
 import ru.romanow.databases.common.events.ProgressBarResetEvent
