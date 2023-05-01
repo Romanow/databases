@@ -16,7 +16,7 @@ class PostgresOperationProvider(
         val entity = wordsRepository.findById(word)
             .orElse(Words(word, 0))
 
-        entity.counter++
+        entity.counter = entity.counter?.inc()
 
         wordsRepository.save(entity)
     }

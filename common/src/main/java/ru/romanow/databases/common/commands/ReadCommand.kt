@@ -24,7 +24,7 @@ class ReadCommand(
     fun list() = bookReader.listBooks()
 
     @ShellMethod("read book")
-    fun read(@ShellOption(valueProvider = BooksValueProvider::class, arity = 10) book: String) {
+    fun read(@ShellOption(valueProvider = BooksValueProvider::class) book: String) {
         val sentences = bookReader.readSentencesFromBook(book)
 
         var index = 1
@@ -33,7 +33,7 @@ class ReadCommand(
             .flatMap { it.words }
             .forEach {
                 operationProvider.insert(it)
-                if (index++ % (size / 100) == 0) {
+                if (size > 100 && index++ % (size / 100) == 0) {
                     val percent = (100 * (index.toDouble() / size)).toInt()
 
                     publisher.publishEvent(ProgressBarProgressEvent(this, percent, "processing $index from $size"))
@@ -52,7 +52,7 @@ class BooksValueProvider(
     private var bookReader: BookReader,
 ) : ValueProvider {
     override fun complete(completionContext: CompletionContext): List<CompletionProposal> {
-        return bookReader.listBooks().map { CompletionProposal(it) }
+        return bookReader.listBooks().map { CompletionProposal("\"$it\"") }
     }
 
 }

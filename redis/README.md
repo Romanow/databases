@@ -2,7 +2,7 @@
 
 GUI: [Medis](https://github.com/luin/medis)
 
-|   Role   |        Address      |
+| Role     | Address             |
 |----------|---------------------|
 | Master   | 6379                |
 | Slave    | 6380, 6381          |
@@ -55,13 +55,13 @@ Redis Sentinel — это сервис, обеспечивающий созда�
 
 | Количество серверов | Кворум | Допустимое количество отказов |
 |---------------------|--------|-------------------------------|
-|                   1 |      1 |                             0 |
-|                   2 |      2 |                             0 |
-|                   3 |      2 |                             1 |
-|                   4 |      2 |                             1 |
-|                   5 |      3 |                             1 |
-|                   6 |      4 |                             2 |
-|                   7 |      4 |                             3 |
+| 1                   | 1      | 0                             |
+| 2                   | 2      | 0                             |
+| 3                   | 2      | 1                             |
+| 4                   | 2      | 1                             |
+| 5                   | 3      | 1                             |
+| 6                   | 4      | 2                             |
+| 7                   | 4      | 3                             |
 
 ### Persistence
 
@@ -165,17 +165,24 @@ Error response from daemon: Ports are not available: exposing port TCP 0.0.0.0:2
 
 ### Пример
 
+```shell
+$ redis-cli -h localhost -p 6379 --askpass
+
+> EVAL "local order = redis.call('HKEYS', KEYS[1]); return redis.call('SADD', KEYS[2], unpack(order));" 2 books words
+
+> SORT words LIMIT 0 50 ALPHA DESC
+
+> SORT words BY books->* DESC LIMIT 0 50
+
+> HGET books address
 ```
-eval "
-  local order = redis.call('hkeys', KEYS[1]);
-  return redis.call('sadd', KEYS[2], unpack(order));
-" 2 hset:books list:words
 
-sort list:words limit 0 50 alpha desc
+### Статус master
 
-sort list:words by hset:books->* limit 0 50
+```shell
+$ redis-cli -h localhost -p 26379 --askpass
 
-hget hset:books address
+> SENTINEL get-master-addr-by-name mymaster
 ```
 
 ## Ссылки

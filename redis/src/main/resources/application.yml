@@ -2,5 +2,5 @@ spring:
   main:
     banner-mode: off
   profiles:
-    active: docker
+    active: local
     include: common

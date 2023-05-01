@@ -14,6 +14,19 @@ Docker: [docker-compose.yml](docker/docker-compose.yml)
 
 ```shell
 $ docker-compose up -d
+
+$ docker exec -it patroni1 /bin/bash
+
+$ patronictl --config-file /etc/patroni.yml topology cluster
++ Cluster: cluster -------+---------+---------+----+-----------+
+| Member     | Host       | Role    | State   | TL | Lag in MB |
++------------+------------+---------+---------+----+-----------+
+| patroni2   | 172.22.0.6 | Leader  | running |  1 |           |
+| + patroni1 | 172.22.0.7 | Replica | running |  1 |         0 |
+| + patroni3 | 172.22.0.5 | Replica | running |  1 |         0 |
++------------+------------+---------+---------+----+-----------+
+
+$ psql -h localhost -p 5000 -U program -d holder
 ```
 
 ### Patroni
@@ -36,4 +49,4 @@ Consul, ZooKeeper либо Etcd Kubernetes.
 
 1. [Bitnami Postgres](https://hub.docker.com/r/bitnami/postgres)
 2. [Bitnami Haproxy](https://hub.docker.com/r/bitnami/haproxy)
-2. [Bitnami ETCd](https://hub.docker.com/r/bitnami/etcd)
+3. [Bitnami ETCd](https://hub.docker.com/r/bitnami/etcd)

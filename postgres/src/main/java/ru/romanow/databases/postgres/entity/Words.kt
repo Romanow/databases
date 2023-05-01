@@ -14,5 +14,5 @@ data class Words(
     var word: String? = null,
 
     @Column(name = "counter")
-    var counter: Int,
+    var counter: Int? = null,
 )
