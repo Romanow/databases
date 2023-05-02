@@ -15,6 +15,13 @@ dependencies {
     testImplementation "org.testcontainers:postgresql:$testContainerVersion"
 }
 
+test {
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+    }
+}
+
 bootJar {
     archiveFileName = "${project.name}.jar"
 }

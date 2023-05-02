@@ -2,7 +2,7 @@
 
 GUI: Kibana (запускается в docker)
 
-|     Role      |     Address      |
+| Role          | Address          |
 |---------------|------------------|
 | ElasticSearch | 9200, 9201, 9202 |
 | Kibana        | 5601             |
@@ -14,41 +14,17 @@ GUI: Kibana (запускается в docker)
   автоматически при индексации.
 * `document` – (аналог строки в реляционной БД) это объект json, сохраненный в `index`, имеет `type` и
   идентификатор (`id`);
-* `shards` – shard will contain a subset of an index data and is in itself fully functional and independent, and you can
-  kind of think of a shard as an `independent index`. There are two main reasons why sharding is important, with the
-  first one being that it allows you to split and thereby scale volumes of data. So if you have growing amounts of data,
-  you will not face a bottleneck because you can always tweak the number of shards for a particular index. I will get
-  back to how to specify the number of shards in just a moment. The other reason why sharding is important, is that
-  operations can be distributed across multiple nodes and thereby parallelized.
-* Put simply, shards are a single Lucene index. They are the building blocks of Elasticsearch and what facilitate its
-  scalability. Index size is a common cause of Elasticsearch crashes. Since there is no limit to how many documents you
-  can store on each index, an index may take up an amount of disk space that exceeds the limits of the hosting server.
-  As soon as an index approaches this limit, indexing will begin to fail. One way to counter this problem is to split up
-  indices horizontally into pieces called shards. This allows you to distribute operations across shards and nodes to
-  improve performance. When you create an index, you can define how many shards you want. Each shard is an independent
-  Lucene index that can be hosted anywhere in your cluster:
-  ```http request
-  PUT localhost:9200/example
-  Content-Type: application/json
-  
-  {
-    "settings" : {
-      "index" : {
-        "number_of_shards" : 2, 
-        "number_of_replicas" : 1 
-      }
-    }
-  }
-  ```
+* `shards` – шарды можно рассматривать как подмножество `index`: они полнофункциональные и независимые и служат для
+  распределения хранения данных между нодами и повышения параллелизации выполнения операций. ElasticSearch поднимает
+  весь индекс в память и если размер индекса превышает доступную память, то приложение падает по `OutOfMemoryError`.
+  Следовательно, разбиение индекса на шарды позволяет загрузить их в память и не приведет к падению.
   ![Shard](images/shard.png)
-* `replicas` – количество реплик индекса, Elastic позволяет выполнять операции чтения с реплик.
+* `replicas` – количество реплик индекса, ElasticSearch позволяет выполнять операции чтения с реплик.
 * `routing` – определяет в каком шарде хранится документ.
-* `analizers` – Analyzers are used during indexing to break down – or parse – phrases and expressions into their
-  constituent terms. Defined within an index, an analyzer consists of a single tokenizer and any number of token
-  filters. For example, a tokenizer could split a string into specifically defined terms when encountering a specific
-  expression. By default, Elasticsearch will apply the Standard Analyzer, which contains a grammar-based tokenizer that
-  removes common English words and applies additional filters. Elasticsearch comes bundled with a series of built-in
-  tokenizers as well, and you can also use a custom tokenizer.
+* `analizers` – Анализаторы используются во время индексирования для разбора фраз и выражений на их составляющие части.
+  Анализатор, определенный в индексе, состоит из одного токенизатора и любого количества фильтров токенов. По умолчанию
+  Elasticsearch применяет стандартный анализатор, который содержит токенизатор на основе грамматики, удаляет
+  распространенные английские слова и применяет дополнительные фильтры.
 
 ### Запуск кластера
 

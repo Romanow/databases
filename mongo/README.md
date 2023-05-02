@@ -2,10 +2,10 @@
 
 GUI: [MongoDB Compass](https://www.mongodb.com/docs/compass/current/)
 
-|   Role   |   Address    |
-|----------|--------------|
-| Master   | 27017        |
-| Slave    | 27018, 27019 |
+| Role   | Address      |
+|--------|--------------|
+| Master | 27017        |
+| Slave  | 27018, 27019 |
 
 ### Запуск кластера
 
@@ -27,9 +27,11 @@ EOT
 
 ### Примеры
 
-```javascript
-// найти самые часто встречающиеся слова
-db.words.find().sort({counter:-1}).limit(10)
+```
+$ mongosh mongodb://localhost:27017,localhost:27018,localhost:27019/ -u program -p test
+
+> rs.status()
+> db.words.find().sort({counter:-1}).limit(10)
 ```
 
 ## Ссылки

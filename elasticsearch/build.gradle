@@ -13,10 +13,13 @@ dependencies {
     testImplementation "org.testcontainers:elasticsearch:$testContainerVersion"
 }
 
-bootJar {
-    archiveFileName = "${project.name}.jar"
+test {
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+    }
 }
 
-springBoot {
-    buildInfo()
+bootJar {
+    archiveFileName = "${project.name}.jar"
 }

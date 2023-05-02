@@ -12,10 +12,13 @@ dependencies {
     testImplementation "org.testcontainers:junit-jupiter:$testContainerVersion"
 }
 
-bootJar {
-    archiveFileName = "${project.name}.jar"
+test {
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+    }
 }
 
-springBoot {
-    buildInfo()
+bootJar {
+    archiveFileName = "${project.name}.jar"
 }
