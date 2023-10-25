@@ -5,7 +5,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
-import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.elasticsearch.ElasticsearchContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
@@ -22,19 +21,18 @@ class ElasticSearchApplicationTest {
     }
 
     companion object {
-        private const val ELASTIC_IMAGE = "bitnami/elasticsearch:8.10.4"
+        private const val DEFAULT_ELASTIC_IMAGE = "docker.elastic.co/elasticsearch/elasticsearch"
+        private const val ELASTIC_IMAGE = "elasticsearch:8.10.2"
         private const val USERNAME = "elastic"
         private const val PASSWORD = "qwerty"
 
-        private val image: DockerImageName = parse(ELASTIC_IMAGE)
-            .asCompatibleSubstituteFor("docker.elastic.co/elasticsearch/elasticsearch")
+        private val image: DockerImageName = parse(ELASTIC_IMAGE).asCompatibleSubstituteFor(DEFAULT_ELASTIC_IMAGE)
 
         @JvmStatic
         @Container
         var elastic: ElasticsearchContainer = ElasticsearchContainer(image)
             .withPassword(PASSWORD)
             .withEnv("xpack.security.transport.ssl.enabled", "false")
-            .waitingFor(Wait.forHttp("/").forStatusCode(200))
 
         @JvmStatic
         @DynamicPropertySource

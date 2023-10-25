@@ -1,8 +1,9 @@
 version: "3.8"
 services:
   mongo-primary:
-    image: "bitnami/mongodb:6.0"
+    image: "bitnami/mongodb:7.0"
     container_name: mongo-primary
+    platform: linux/amd64
     environment:
       - MONGODB_USERNAME=program
       - MONGODB_PASSWORD=test
@@ -21,8 +22,9 @@ services:
       - mongo
 
   mongo-secondary-1:
-    image: "bitnami/mongodb:6.0"
+    image: "bitnami/mongodb:7.0"
     container_name: mongo-secondary-1
+    platform: linux/amd64
     environment:
       - MONGODB_PORT_NUMBER=27018
       - MONGODB_REPLICA_SET_MODE=secondary
@@ -38,11 +40,13 @@ services:
     networks:
       - mongo
     depends_on:
-      - mongo-primary
+      mongo-primary:
+        condition: service_started
 
   mongo-secondary-2:
-    image: "bitnami/mongodb:6.0"
+    image: "bitnami/mongodb:7.0"
     container_name: mongo-secondary-2
+    platform: linux/amd64
     environment:
       - MONGODB_PORT_NUMBER=27019
       - MONGODB_REPLICA_SET_MODE=secondary
@@ -58,8 +62,8 @@ services:
     networks:
       - mongo
     depends_on:
-      - mongo-primary
-      - mongo-secondary-1
+      mongo-primary:
+        condition: service_started
 
 networks:
   mongo:
