@@ -14,7 +14,7 @@ jobs:
           cache: "gradle"
 
       - name: Build project
-        uses: eskatos/gradle-command-action@v1
+        uses: eskatos/gradle-command-action@v2
         with:
           dependencies-cache-enabled: true
           arguments: clean build
