@@ -5,13 +5,12 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
-import org.testcontainers.containers.wait.strategy.HttpWaitStrategy
+import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.elasticsearch.ElasticsearchContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 import org.testcontainers.utility.DockerImageName
 import org.testcontainers.utility.DockerImageName.parse
-import java.time.Duration.ofMinutes
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -35,12 +34,7 @@ class ElasticSearchApplicationTest {
         var elastic: ElasticsearchContainer = ElasticsearchContainer(image)
             .withPassword(PASSWORD)
             .withEnv("xpack.security.transport.ssl.enabled", "false")
-            .waitingFor(
-                HttpWaitStrategy()
-                    .forPath("/_cluster/health")
-                    .forStatusCode(200)
-                    .withStartupTimeout(ofMinutes(5))
-            )
+            .waitingFor(Wait.forHttp("/").forStatusCode(200))
 
         @JvmStatic
         @DynamicPropertySource
