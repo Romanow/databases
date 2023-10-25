@@ -22,7 +22,7 @@ class ElasticSearchApplicationTest {
     }
 
     companion object {
-        private const val ELASTIC_IMAGE = "bitnami/elasticsearch:8.6.2"
+        private const val ELASTIC_IMAGE = "bitnami/elasticsearch:8.10.4"
         private const val USERNAME = "elastic"
         private const val PASSWORD = "qwerty"
 
