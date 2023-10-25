@@ -11,6 +11,7 @@ import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 import org.testcontainers.utility.DockerImageName
 import org.testcontainers.utility.DockerImageName.parse
+import java.time.Duration.ofSeconds
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -38,7 +39,8 @@ class ElasticSearchApplicationTest {
                 HttpWaitStrategy()
                     .forPath("/_cluster/health")
                     .forStatusCode(200)
-                    .forResponsePredicate { it.contains("\"status\":\"green\"") })
+                    .withStartupTimeout(ofSeconds(120))
+            )
 
         @JvmStatic
         @DynamicPropertySource
