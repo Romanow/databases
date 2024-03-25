@@ -5,7 +5,7 @@ import org.springframework.data.elasticsearch.annotations.Document
 import org.springframework.data.elasticsearch.annotations.Field
 import org.springframework.data.elasticsearch.annotations.FieldType
 import org.springframework.data.elasticsearch.annotations.Setting
-import java.util.*
+import java.util.UUID
 
 @Document(indexName = "sentences")
 @Setting(replicas = 2, shards = 10)

@@ -1,6 +1,7 @@
 # Databases
 
 [![Build project](https://github.com/Romanow/databases/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/Romanow/databases/actions/workflows/main.yml)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
 1. [Redis](redis)
 2. [Postgres](postgres)

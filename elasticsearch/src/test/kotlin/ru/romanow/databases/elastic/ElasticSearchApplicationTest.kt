@@ -22,7 +22,7 @@ class ElasticSearchApplicationTest {
 
     companion object {
         private const val DEFAULT_ELASTIC_IMAGE = "docker.elastic.co/elasticsearch/elasticsearch"
-        private const val ELASTIC_IMAGE = "elasticsearch:8.10.2"
+        private const val ELASTIC_IMAGE = "elasticsearch:8.12.2"
         private const val USERNAME = "elastic"
         private const val PASSWORD = "qwerty"
 

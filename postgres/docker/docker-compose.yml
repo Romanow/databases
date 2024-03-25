@@ -1,4 +1,4 @@
-version: "3"
+version: "3.9"
 services:
   etcd1:
     image: "bitnami/etcd:3.5"
@@ -13,7 +13,13 @@ services:
       - ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster
       - ETCD_INITIAL_CLUSTER=etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380
       - ETCD_INITIAL_CLUSTER_STATE=new
-    networks: [ patroni ]
+    healthcheck:
+      test: [ "CMD-SHELL", "etcdctl endpoint health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - patroni
 
   etcd2:
     image: "bitnami/etcd:3.5"
@@ -28,7 +34,13 @@ services:
       - ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster
       - ETCD_INITIAL_CLUSTER=etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380
       - ETCD_INITIAL_CLUSTER_STATE=new
-    networks: [ patroni ]
+    healthcheck:
+      test: [ "CMD-SHELL", "etcdctl endpoint health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - patroni
 
   etcd3:
     image: "bitnami/etcd:3.5"
@@ -43,50 +55,111 @@ services:
       - ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster
       - ETCD_INITIAL_CLUSTER=etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380
       - ETCD_INITIAL_CLUSTER_STATE=new
-    networks: [ patroni ]
+    healthcheck:
+      test: [ "CMD-SHELL", "etcdctl endpoint health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - patroni
 
   haproxy:
-    image: "bitnami/haproxy:2.7.6"
+    image: "bitnami/haproxy:2.9.6"
     container_name: haproxy
     ports:
       - "5000:5000"
+      - "8404:8404"
+    healthcheck:
+      test: [ "CMD", "pgrep", "haproxy" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - ./haproxy/haproxy.cfg:/bitnami/haproxy/conf/haproxy.cfg
-    networks: [ patroni ]
-    depends_on: [ patroni1, patroni2, patroni3 ]
+    networks:
+      - patroni
+    depends_on:
+      patroni1:
+        condition: service_healthy
+      patroni2:
+        condition: service_healthy
+      patroni3:
+        condition: service_healthy
 
   patroni1:
     build: patroni
     container_name: patroni1
+    hostname: patroni1
     environment:
       PATRONI_NAME: patroni1
     volumes:
       - patroni1:/data/patroni
       - ./patroni/setup.sh:/usr/local/bin/scripts/setup.sh
-    networks: [ patroni ]
-    depends_on: [ etcd1, etcd2, etcd3 ]
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -h $(hostname) -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - patroni
+    depends_on:
+      etcd1:
+        condition: service_healthy
+      etcd2:
+        condition: service_healthy
+      etcd3:
+        condition: service_healthy
 
   patroni2:
     build: patroni
     container_name: patroni2
+    hostname: patroni2
     environment:
       PATRONI_NAME: patroni2
     volumes:
       - patroni2:/data/patroni
       - ./patroni/setup.sh:/usr/local/bin/scripts/setup.sh
-    networks: [ patroni ]
-    depends_on: [ etcd1, etcd2, etcd3 ]
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -h $(hostname) -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - patroni
+    depends_on:
+      etcd1:
+        condition: service_healthy
+      etcd2:
+        condition: service_healthy
+      etcd3:
+        condition: service_healthy
 
   patroni3:
     build: patroni
     container_name: patroni3
+    hostname: patroni3
     environment:
       PATRONI_NAME: patroni3
     volumes:
       - patroni3:/data/patroni
       - ./patroni/setup.sh:/usr/local/bin/scripts/setup.sh
-    networks: [ patroni ]
-    depends_on: [ etcd1, etcd2, etcd3 ]
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -h $(hostname) -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - patroni
+    depends_on:
+      etcd1:
+        condition: service_healthy
+      etcd2:
+        condition: service_healthy
+      etcd3:
+        condition: service_healthy
 
 networks:
   patroni:

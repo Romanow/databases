@@ -16,6 +16,11 @@ services:
       - MONGODB_ADVERTISED_HOSTNAME=mongo-primary
     ports:
       - "27017:27017"
+    healthcheck:
+      test: [ "CMD-SHELL", "mongosh --eval 'quit((db.hello().isWritablePrimary || db.hello().secondary) ? 0 : 2)'" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - mongo-master-data:/bitnami/mongodb
     networks:
@@ -37,6 +42,11 @@ services:
       - MONGODB_REPLICA_SET_KEY=replicaset
     ports:
       - "27018:27018"
+    healthcheck:
+      test: [ "CMD-SHELL", "mongosh --port $$MONGODB_PORT_NUMBER --eval 'quit((db.hello().isWritablePrimary || db.hello().secondary) ? 0 : 2)'" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - mongo
     depends_on:
@@ -59,6 +69,11 @@ services:
       - MONGODB_REPLICA_SET_KEY=replicaset
     ports:
       - "27019:27019"
+    healthcheck:
+      test: [ "CMD-SHELL", "mongosh --port $$MONGODB_PORT_NUMBER --eval 'quit((db.hello().isWritablePrimary || db.hello().secondary) ? 0 : 2)'" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - mongo
     depends_on:

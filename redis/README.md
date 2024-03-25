@@ -154,7 +154,7 @@ EOT
 
 ```log
 org.springframework.data.redis.RedisConnectionFailureException: Unable to connect to Redis; nested exception is io.lettuce.core.RedisConnectionException: Unable to connect to 192.168.80.2:6379
-	at org.springframework.data.redis.connection.lettuce
+    at org.springframework.data.redis.connection.lettuce
 ```
 
 Все redis-sentinel описываются руками, потому что `docker compose up -d --scale redis-sentinel=3` приводит к ошибке:
@@ -194,4 +194,4 @@ $ redis-cli -h localhost -p 26379 --askpass
 #### Образы Docker
 
 1. [Bitnami Redis](https://hub.docker.com/r/bitnami/redis)
-1. [Bitnami Redis Sentinel](https://hub.docker.com/r/bitnami/redis-sentinel)
+2. [Bitnami Redis Sentinel](https://hub.docker.com/r/bitnami/redis-sentinel)

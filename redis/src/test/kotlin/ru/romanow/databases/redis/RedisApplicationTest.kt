@@ -22,7 +22,7 @@ class RedisApplicationTest {
     }
 
     companion object {
-        private const val REDIS_IMAGE = "redis:7.0"
+        private const val REDIS_IMAGE = "redis:7.2"
         private const val EXPOSED_PORT = 6379
 
         @JvmStatic
