@@ -22,7 +22,7 @@ class PostgresApplicationTest {
 
     companion object {
         private const val POSTGRES_IMAGE = "postgres:15"
-        private const val DATABASE = "testdb"
+        private const val DATABASE = "services"
         private const val USERNAME = "program"
         private const val PASSWORD = "test"
 

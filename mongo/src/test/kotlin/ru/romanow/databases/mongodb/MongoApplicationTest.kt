@@ -22,7 +22,7 @@ class MongoApplicationTest {
 
     companion object {
         private const val MONGO_IMAGE = "mongo:6"
-        private const val DATABASE = "testdb"
+        private const val DATABASE = "services"
         private const val USERNAME = "program"
         private const val PASSWORD = "test"
         private const val EXPOSED_PORT = 27017

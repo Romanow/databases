@@ -7,7 +7,7 @@ services:
     environment:
       - MONGODB_USERNAME=program
       - MONGODB_PASSWORD=test
-      - MONGODB_DATABASE=testdb
+      - MONGODB_DATABASE=services
       - MONGODB_ROOT_USER=program
       - MONGODB_ROOT_PASSWORD=test
       - MONGODB_REPLICA_SET_MODE=primary
