@@ -1,12 +1,5 @@
 # Elastic
 
-GUI: Kibana (запускается в docker)
-
-| Role          | Address          |
-|---------------|------------------|
-| ElasticSearch | 9200, 9201, 9202 |
-| Kibana        | 5601             |
-
 ## Внутреннее устройство
 
 * `index` – (аналог базы данных в реляционной БД) каждый `index` имеет схему (`mapping`), которая определяет
@@ -26,17 +19,7 @@ GUI: Kibana (запускается в docker)
   Elasticsearch применяет стандартный анализатор, который содержит токенизатор на основе грамматики, удаляет
   распространенные английские слова и применяет дополнительные фильтры.
 
-### Запуск кластера
-
-Docker: [docker-compose.yml](docker/docker-compose.yml)
-
-```shell
-$ docker-compose up -d
-
-$ curl 'http://localhost:9200/_cluster/health?pretty' --user elastic:qwerty
-```
-
-### Примеры
+## Пример
 
 ```http request
 POST /words/_search
@@ -66,8 +49,3 @@ GET /_cat/words
 
 1. [Understanding Sharding in Elasticsearch](https://codingexplained.com/coding/elasticsearch/understanding-sharding-in-elasticsearch)
 2. [10 Elasticsearch Concepts You Need to Learn](https://logz.io/blog/10-elasticsearch-concepts/)
-
-#### Образы Docker
-
-1. [Bitnami ElasticSearch](https://hub.docker.com/r/bitnami/elasticsearch)
-1. [Bitnami Kibana](https://hub.docker.com/r/bitnami/kibana)

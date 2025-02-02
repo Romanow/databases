@@ -1,14 +1,10 @@
-# Databases
-
-[![Build project](https://github.com/Romanow/databases/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/Romanow/databases/actions/workflows/main.yml)
+[![CI](https://github.com/Romanow/databases/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/Romanow/databases/actions/workflows/main.yml)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+[![License](https://img.shields.io/github/license/Romanow/databases)](https://github.com/Romanow/databases/blob/master/LICENSE)
 
-1. [Redis](redis)
-2. [Postgres](postgres)
-3. [ElasticSearch](elasticsearch)
-4. [MongoDB](mongo)
+# Databaseхs
 
-## Ссылки
-
-1. [Consistent против Rendezvous — чем отличаются подходы для хэширования данных на сервере](https://habr.com/ru/companies/mygames/articles/669390/)
-2. [A Guide to Consistent Hashing](https://www.toptal.com/big-data/consistent-hashing)
+1. [Redis](redis/README.md)
+2. [Postgres](postgres/README.md)
+3. [ElasticSearch](elasticsearch/README.md)
+4. [MongoDB](mongo/README.md)
