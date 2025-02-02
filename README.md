@@ -2,7 +2,7 @@
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![License](https://img.shields.io/github/license/Romanow/databases)](https://github.com/Romanow/databases/blob/master/LICENSE)
 
-# Databaseхs
+# Databases
 
 1. [Redis](redis/README.md)
 2. [Postgres](postgres/README.md)
