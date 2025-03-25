@@ -9,7 +9,7 @@ plugins {
 }
 
 ext {
-    springBootVersion = "3.3.4"
+    springBootVersion = "3.4.4"
     springBootShellVersion = "3.3.4"
     kotlinVersion = "1.9.25"
     testContainerVersion = "1.20.4"
