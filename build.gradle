@@ -12,7 +12,7 @@ ext {
     springBootVersion = "3.4.4"
     springBootShellVersion = "3.4.0"
     kotlinVersion = "1.9.25"
-    redisContainerVersion = "2.2.2"
+    redisContainerVersion = "2.2.4"
     testContainerVersion = "1.21.0"
 }
 
