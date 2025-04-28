@@ -1,45 +1,41 @@
 package ru.romanow.databases.elastic
 
 import org.junit.jupiter.api.Test
+import org.slf4j.LoggerFactory
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchConnectionDetails
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.context.TestConfiguration
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection
+import org.springframework.context.annotation.Bean
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.DynamicPropertyRegistry
-import org.springframework.test.context.DynamicPropertySource
+import org.testcontainers.containers.output.Slf4jLogConsumer
 import org.testcontainers.elasticsearch.ElasticsearchContainer
-import org.testcontainers.junit.jupiter.Container
-import org.testcontainers.junit.jupiter.Testcontainers
-import org.testcontainers.utility.DockerImageName
-import org.testcontainers.utility.DockerImageName.parse
 
 @ActiveProfiles("test")
 @SpringBootTest
-@Testcontainers
 class ElasticSearchApplicationTest {
 
     @Test
     fun test() {
     }
 
-    companion object {
-        private const val DEFAULT_ELASTIC_IMAGE = "docker.elastic.co/elasticsearch/elasticsearch"
-        private const val ELASTIC_IMAGE = "elasticsearch:8.12.2"
-        private const val USERNAME = "elastic"
-        private const val PASSWORD = "qwerty"
+    @TestConfiguration
+    internal class ElasticSearchTestConfiguration {
+        private val logger = LoggerFactory.getLogger(ElasticSearchTestConfiguration::class.java)
 
-        private val image: DockerImageName = parse(ELASTIC_IMAGE).asCompatibleSubstituteFor(DEFAULT_ELASTIC_IMAGE)
+        @Bean
+        @ServiceConnection
+        fun elastic(registry: DynamicPropertyRegistry): ElasticsearchContainer {
+            return ElasticsearchContainer(ELASTIC_IMAGE)
+                .withExposedPorts(EXPOSED_PORT)
+                .withEnv("xpack.security.enabled", "false")
+                .withLogConsumer { Slf4jLogConsumer(logger) }
+        }
 
-        @JvmStatic
-        @Container
-        var elastic: ElasticsearchContainer = ElasticsearchContainer(image)
-            .withPassword(PASSWORD)
-            .withEnv("xpack.security.transport.ssl.enabled", "false")
-
-        @JvmStatic
-        @DynamicPropertySource
-        fun registerProperties(registry: DynamicPropertyRegistry) {
-            registry.add("spring.elasticsearch.uris") { elastic.httpHostAddress }
-            registry.add("spring.elasticsearch.username") { USERNAME }
-            registry.add("spring.elasticsearch.password") { PASSWORD }
+        companion object {
+            private const val ELASTIC_IMAGE = "elasticsearch:8.12.2"
+            private const val EXPOSED_PORT = 9200
         }
     }
 }

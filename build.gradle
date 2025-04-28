@@ -4,15 +4,16 @@ plugins {
     id "org.jetbrains.kotlin.jvm" version "1.9.25"
     id "org.jetbrains.kotlin.plugin.spring" version "1.9.25" apply false
     id "org.jetbrains.kotlin.plugin.jpa" version "1.9.25" apply false
-    id "org.springframework.boot" version "3.3.4" apply false
+    id "org.springframework.boot" version "3.4.4" apply false
     id "io.spring.dependency-management" version "1.1.7"
 }
 
 ext {
-    springBootVersion = "3.3.4"
-    springBootShellVersion = "3.3.4"
+    springBootVersion = "3.4.4"
+    springBootShellVersion = "3.4.0"
     kotlinVersion = "1.9.25"
-    testContainerVersion = "1.20.4"
+    redisContainerVersion = "2.2.2"
+    testContainerVersion = "1.21.0"
 }
 
 allprojects { ->
