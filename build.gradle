@@ -13,7 +13,7 @@ ext {
     springBootShellVersion = "3.4.0"
     kotlinVersion = "1.9.25"
     redisContainerVersion = "2.2.2"
-    testContainerVersion = "1.21.0"
+    testContainerVersion = "1.21.1"
 }
 
 allprojects { ->
